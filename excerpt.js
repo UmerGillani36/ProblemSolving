@@ -1,8 +1,11 @@
 const excerpt = (str) => {
+  if(str && typeof str === 'string'){
+
     let stringLength = str.length;
     if (stringLength > 30) {
       str = str.substring(0, 30) + " ... ";
     }
+  }
     return str;
   }
 
