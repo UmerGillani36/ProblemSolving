@@ -14,20 +14,35 @@
 
 // Memoization (Dynamic Programming)
 
-const canSum = (targetSum, numbers, memo = {}) => {
-  if (targetSum in memo) return memo[targetSum];
-  if (targetSum === 0) return true;
-  if (targetSum < 0) return false;
+// const canSum = (targetSum, numbers, memo = {}) => {
+//   if (targetSum in memo) return memo[targetSum];
+//   if (targetSum === 0) return true;
+//   if (targetSum < 0) return false;
 
-  for (let num of numbers) {
-    const reminder = targetSum - num;
-    if (canSum(reminder, numbers, memo) === true) {
-      memo[targetSum] = true;
-      return true;
+//   for (let num of numbers) {
+//     const reminder = targetSum - num;
+//     if (canSum(reminder, numbers, memo) === true) {
+//       memo[targetSum] = true;
+//       return true;
+//     }
+//   }
+//   memo[targetSum] = false;
+//   return false;
+// };
+
+// Tabulation (Dynamic Programming)
+
+const canSum = (targetSum, numbers) => {
+  const table = Array(targetSum + 1).fill(false);
+  table[0] = true;
+  for (let i = 0; i <= targetSum; i++) {
+    if (table[i] === true) {
+      for (let num of numbers) {
+        table[i + num] = true;
+      }
     }
   }
-  memo[targetSum] = false;
-  return false;
+  return table[targetSum];
 };
 console.log(canSum(7, [2, 3])); // true
 console.log(canSum(7, [5, 3, 4, 7])); // true
